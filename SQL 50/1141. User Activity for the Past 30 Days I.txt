@@ -1,0 +1,82 @@
+LeetCode Problem: 1141. User Activity for the Past 30 Days I
+Problem Description:
+Table: Activity
+
+Column Name	Type
+user_id	int
+session_id	int
+activity_date	date
+activity_type	enum
+This table may have duplicate rows.
+
+The activity_type column is an ENUM (category) of type ('open_session', 'end_session', 'scroll_down', 'send_message').
+
+The table shows the user activities for a social media website.
+
+Note that each session belongs to exactly one user.
+
+Task: Write a solution to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively. A user was active on a given day if they made at least one activity on that day.
+
+Return: The result table in any order.
+
+Example:
+Input:
+
+plaintext
+Activity table:
++---------+------------+---------------+---------------+
+| user_id | session_id | activity_date | activity_type |
++---------+------------+---------------+---------------+
+| 1       | 1          | 2019-07-20    | open_session  |
+| 1       | 1          | 2019-07-20    | scroll_down   |
+| 1       | 1          | 2019-07-20    | end_session   |
+| 2       | 4          | 2019-07-20    | open_session  |
+| 2       | 4          | 2019-07-21    | send_message  |
+| 2       | 4          | 2019-07-21    | end_session   |
+| 3       | 2          | 2019-07-21    | open_session  |
+| 3       | 2          | 2019-07-21    | send_message  |
+| 3       | 2          | 2019-07-21    | end_session   |
+| 4       | 3          | 2019-06-25    | open_session  |
+| 4       | 3          | 2019-06-25    | end_session   |
++---------+------------+---------------+---------------+
+Output:
+
+plaintext
++------------+--------------+
+| day        | active_users |
++------------+--------------+
+| 2019-07-20 | 2            |
+| 2019-07-21 | 2            |
++------------+--------------+
+Explanation:
+
+Note that we do not care about days with zero active users.
+
+Solution:
+The following SQL query calculates the daily active user count for a period of 30 days ending 2019-07-27 inclusively:
+
+sql
+-- SQL Solution to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively
+SELECT 
+    activity_date AS day,
+    COUNT(DISTINCT user_id) AS active_users
+FROM 
+    Activity
+WHERE 
+    activity_date BETWEEN '2019-06-28' AND '2019-07-27'
+GROUP BY 
+    activity_date;
+Explanation of the Code:
+
+SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users: This part of the query selects the activity_date (aliased as day) and counts the distinct user_id values for each day. The result is aliased as active_users.
+
+FROM Activity: This indicates that the data should be selected from the Activity table.
+
+WHERE activity_date BETWEEN '2019-06-28' AND '2019-07-27': This filters the rows to include only those with activity_date within the specified date range.
+
+GROUP BY activity_date: This groups the results by the activity_date to calculate the number of active users for each day.
+
+Comments:
+This solution efficiently calculates the daily active user count for a period of 30 days ending 2019-07-27 inclusively.
+
+Make sure the database and table are correctly set up before running the query.

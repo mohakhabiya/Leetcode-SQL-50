@@ -1,0 +1,83 @@
+LeetCode Problem: 1321. Restaurant Growth
+Problem Description:
+Table: Customer
+
+Column Name	Type
+customer_id	int
+name	varchar
+visited_on	date
+amount	int
+(customer_id, visited_on) is the primary key for this table.
+
+This table contains data about customer transactions in a restaurant.
+
+visited_on is the date on which the customer with ID (customer_id) has visited the restaurant.
+
+amount is the total paid by a customer.
+
+Task: Compute the moving average of how much the customer paid in a seven-day window (i.e., current day + 6 days before). The average amount should be rounded to two decimal places.
+
+Return: The result table ordered by visited_on in ascending order.
+
+Example:
+Input:
+
+plaintext
+Customer table:
++-------------+--------------+--------------+-------------+
+| customer_id | name         | visited_on   | amount      |
++-------------+--------------+--------------+-------------+
+| 1           | Jhon         | 2019-01-01   | 100         |
+| 2           | Daniel       | 2019-01-02   | 110         |
+| 3           | Jade         | 2019-01-03   | 120         |
+| 4           | Khaled       | 2019-01-04   | 130         |
+| 5           | Winston      | 2019-01-05   | 110         | 
+| 6           | Elvis        | 2019-01-06   | 140         | 
+| 7           | Anna         | 2019-01-07   | 150         |
+| 8           | Maria        | 2019-01-08   | 80          |
+| 9           | Jaze         | 2019-01-09   | 110         | 
+| 1           | Jhon         | 2019-01-10   | 130         | 
+| 3           | Jade         | 2019-01-10   | 150         | 
++-------------+--------------+--------------+-------------+
+Output:
+
+plaintext
++--------------+--------------+----------------+
+| visited_on   | amount       | average_amount |
++--------------+--------------+----------------+
+| 2019-01-07   | 860          | 122.86         |
+| 2019-01-08   | 840          | 120            |
+| 2019-01-09   | 840          | 120            |
+| 2019-01-10   | 1000         | 142.86         |
++--------------+--------------+----------------+
+Solution:
+The following SQL query computes the moving average of how much the customer paid in a seven-day window:
+
+sql
+-- SQL Solution to compute the moving average in a seven-day window
+SELECT 
+    visited_on,
+    SUM(amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS amount,
+    ROUND(AVG(amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS average_amount
+FROM 
+    Customer
+ORDER BY 
+    visited_on;
+Explanation of the Code:
+
+SELECT visited_on, SUM(amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS amount, ROUND(AVG(amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS average_amount:
+
+This part of the query calculates the moving sum (amount) and moving average (average_amount) for a seven-day window.
+
+The SUM(amount) and AVG(amount) functions use the window frame ROWS BETWEEN 6 PRECEDING AND CURRENT ROW, which defines a window of the current day and the previous six days.
+
+The ROUND function rounds the moving average to two decimal places.
+
+FROM Customer: This indicates that the data should be selected from the Customer table.
+
+ORDER BY visited_on: This orders the result by visited_on in ascending order.
+
+Comments:
+This solution efficiently calculates the moving average of customer payments in a seven-day window, rounded to two decimal places.
+
+Make sure the database and table are correctly set up before running the query.

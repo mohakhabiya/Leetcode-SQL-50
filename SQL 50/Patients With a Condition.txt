@@ -1,0 +1,69 @@
+LeetCode Problem: 1527. Patients With a Condition
+Problem Description:
+Table: Patients
+
+Column Name	Type
+patient_id	int
+patient_name	varchar
+conditions	varchar
+patient_id is the primary key (column with unique values) for this table.
+
+conditions contains 0 or more codes separated by spaces.
+
+This table contains information about the patients in the hospital.
+
+Task: Write a solution to find the patient_id, patient_name, and conditions of the patients who have Type I Diabetes. Type I Diabetes always starts with the DIAB1 prefix.
+
+Return: The result table in any order.
+
+Example:
+Input:
+
+plaintext
+Patients table:
++------------+--------------+--------------+
+| patient_id | patient_name | conditions   |
++------------+--------------+--------------+
+| 1          | Daniel       | YFEV COUGH   |
+| 2          | Alice        |              |
+| 3          | Bob          | DIAB100 MYOP |
+| 4          | George       | ACNE DIAB100 |
+| 5          | Alain        | DIAB201      |
++------------+--------------+--------------+
+Output:
+
+plaintext
++------------+--------------+--------------+
+| patient_id | patient_name | conditions   |
++------------+--------------+--------------+
+| 3          | Bob          | DIAB100 MYOP |
+| 4          | George       | ACNE DIAB100 |
++------------+--------------+--------------+
+Explanation:
+
+Bob and George both have a condition that starts with DIAB1.
+
+Solution:
+The following SQL query finds the patient_id, patient_name, and conditions of the patients who have Type I Diabetes:
+
+sql
+-- SQL Solution to find patients who have Type I Diabetes (conditions start with DIAB1)
+SELECT 
+    patient_id,
+    patient_name,
+    conditions
+FROM 
+    Patients
+WHERE 
+    conditions LIKE '%DIAB1%'
+ORDER BY 
+    patient_id;
+Explanation of the Code:
+
+SELECT patient_id, patient_name, conditions: This part of the query selects the patient_id, patient_name, and conditions columns from the Patients table.
+
+FROM Patients: This indicates that the data should be selected from the Patients table.
+
+WHERE conditions LIKE '%DIAB1%': This condition filters the records to include only those patients whose conditions column contains a condition that starts with DIAB1.
+
+ORDER BY patient_id: This orders the result by patient_id in ascending order.

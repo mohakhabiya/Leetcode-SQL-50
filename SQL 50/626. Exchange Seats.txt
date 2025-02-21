@@ -1,0 +1,81 @@
+LeetCode Problem: 626. Exchange Seats
+Problem Description:
+Table: Seat
+
+Column Name	Type
+id	int
+student	varchar
+id is the primary key (unique value) column for this table.
+
+Each row of this table indicates the name and the ID of a student.
+
+The ID sequence always starts from 1 and increments continuously.
+
+Task: Write a solution to swap the seat id of every two consecutive students. If the number of students is odd, the ID of the last student is not swapped.
+
+Return: The result table ordered by id in ascending order.
+
+Example:
+Input:
+
+plaintext
+Seat table:
++----+---------+
+| id | student |
++----+---------+
+| 1  | Abbot   |
+| 2  | Doris   |
+| 3  | Emerson |
+| 4  | Green   |
+| 5  | Jeames  |
++----+---------+
+Output:
+
+plaintext
++----+---------+
+| id | student |
++----+---------+
+| 1  | Doris   |
+| 2  | Abbot   |
+| 3  | Green   |
+| 4  | Emerson |
+| 5  | Jeames  |
++----+---------+
+Explanation:
+
+Note that if the number of students is odd, there is no need to change the last one's seat.
+
+Solution:
+The following SQL query swaps the seat id of every two consecutive students. If the number of students is odd, the ID of the last student is not swapped:
+
+sql
+-- SQL Solution to swap the seat id of every two consecutive students
+SELECT 
+    CASE
+        WHEN MOD(id, 2) != 0 AND id != (SELECT MAX(id) FROM Seat) THEN id + 1
+        WHEN MOD(id, 2) = 0 THEN id - 1
+        ELSE id
+    END AS id,
+    student
+FROM 
+    Seat
+ORDER BY 
+    id;
+Explanation of the Code:
+
+CASE statement: This is used to conditionally swap the id values:
+
+WHEN MOD(id, 2) != 0 AND id != (SELECT MAX(id) FROM Seat) THEN id + 1: If the id is odd and it is not the last id (in case of an odd number of students), increment the id by 1.
+
+WHEN MOD(id, 2) = 0 THEN id - 1: If the id is even, decrement the id by 1.
+
+ELSE id: If none of the above conditions are met (i.e., the last student in the case of an odd number of students), keep the id unchanged.
+
+FROM Seat: This indicates that the data should be selected from the Seat table.
+
+ORDER BY id: This orders the result by id in ascending order.
+
+Comments:
+This solution efficiently swaps the seat id of every two consecutive students while handling the case of an odd number of students.
+
+Make sure the database and table are correctly set up before running the query.

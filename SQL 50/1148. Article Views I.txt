@@ -1,0 +1,69 @@
+LeetCode Problem: 1148. Article Views I
+
+Problem Description:
+Table: Views
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| article_id    | int     |
+| author_id     | int     |
+| viewer_id     | int     |
+| view_date     | date    |
++---------------+---------+
+There is no primary key (column with unique values) for this table; the table may have duplicate rows. Each row of this table indicates that some viewer viewed an article (written by some author) on some date. Note that equal author_id and viewer_id indicate the same person.
+
+Task: Write a solution to find all the authors that viewed at least one of their own articles.
+
+Return: The result table sorted by id in ascending order.
+
+Example:
+Input:
+
+plaintext
+Views table:
++------------+-----------+-----------+------------+
+| article_id | author_id | viewer_id | view_date  |
++------------+-----------+-----------+------------+
+| 1          | 3         | 5         | 2019-08-01 |
+| 1          | 3         | 6         | 2019-08-02 |
+| 2          | 7         | 7         | 2019-08-01 |
+| 2          | 7         | 6         | 2019-08-02 |
+| 4          | 7         | 1         | 2019-07-22 |
+| 3          | 4         | 4         | 2019-07-21 |
+| 3          | 4         | 4         | 2019-07-21 |
++------------+-----------+-----------+------------+
+Output:
+
+plaintext
++------+
+| id   |
++------+
+| 4    |
+| 7    |
++------+
+Explanation: Authors 4 and 7 viewed at least one of their own articles.
+
+Solution:
+The following SQL query selects the author_id from the Views table where the author_id is equal to the viewer_id, then returns the results sorted by author_id in ascending order.
+
+sql
+-- SQL Solution to find authors that viewed at least one of their own articles
+SELECT DISTINCT author_id AS id
+FROM Views
+WHERE author_id = viewer_id
+ORDER BY id;
+Explanation of the Code:
+
+SELECT DISTINCT author_id AS id: This part of the query selects distinct author_id values and renames the column to id.
+
+FROM Views: This indicates that the data should be selected from the Views table.
+
+WHERE author_id = viewer_id: This condition filters the rows to include only those where the author_id is equal to the viewer_id, indicating that the author viewed their own article.
+
+ORDER BY id: This sorts the result by id in ascending order.
+
+Comments:
+This solution efficiently identifies and retrieves the desired authors who have viewed at least one of their own articles.
+
+Make sure the database and table are correctly set up before running the query.

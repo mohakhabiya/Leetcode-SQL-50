@@ -1,0 +1,72 @@
+LeetCode Problem: 595. Big Countries
+
+Problem Description:
+Table: World
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| name        | varchar |
+| continent   | varchar |
+| area        | int     |
+| population  | int     |
+| gdp         | bigint  |
++-------------+---------+
+name is the primary key (column with unique values) for this table. Each row of this table gives information about the name of a country, the continent to which it belongs, its area, the population, and its GDP value.
+
+Definition of a Big Country:
+
+It has an area of at least three million (i.e., 3,000,000 km²), or
+
+It has a population of at least twenty-five million (i.e., 25,000,000).
+
+Task: Write a solution to find the name, population, and area of the big countries.
+
+Return: The result table in any order.
+
+Example:
+Input:
+
+plaintext
+World table:
++-------------+-----------+---------+------------+--------------+
+| name        | continent | area    | population | gdp          |
++-------------+-----------+---------+------------+--------------+
+| Afghanistan | Asia      | 652230  | 25500100   | 20343000000  |
+| Albania     | Europe    | 28748   | 2831741    | 12960000000  |
+| Algeria     | Africa    | 2381741 | 37100000   | 188681000000 |
+| Andorra     | Europe    | 468     | 78115      | 3712000000   |
+| Angola      | Africa    | 1246700 | 20609294   | 100990000000 |
++-------------+-----------+---------+------------+--------------+
+Output:
+
+plaintext
++-------------+------------+---------+
+| name        | population | area    |
++-------------+------------+---------+
+| Afghanistan | 25500100   | 652230  |
+| Algeria     | 37100000   | 2381741 |
++-------------+------------+---------+
+Explanation: Only Afghanistan and Algeria meet at least one of the criteria for being classified as a big country.
+
+Solution:
+The following SQL query selects the name, population, and area of countries that are classified as big:
+
+sql
+-- SQL Solution to find the name, population, and area of big countries
+
+SELECT name, population, area
+FROM World
+WHERE area >= 3000000 OR population >= 25000000;
+Explanation of the Code:
+
+SELECT name, population, area: This part of the query specifies that we want to select the name, population, and area columns from the table.
+
+FROM World: This indicates that the data should be selected from the World table.
+
+WHERE area >= 3000000 OR population >= 25000000: This condition filters the rows to include only those countries that have an area of at least 3,000,000 km² or a population of at least 25,000,000.
+
+Comments:
+This solution efficiently filters and retrieves the desired countries that meet the criteria for being big.
+
+Make sure the database and table are correctly set up before running the query.

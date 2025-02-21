@@ -1,0 +1,67 @@
+LeetCode Problem: 1667. Fix Names in a Table
+Problem Description:
+Table: Users
+
+Column Name	Type
+user_id	int
+name	varchar
+user_id is the primary key (column with unique values) for this table.
+
+This table contains the ID and the name of the user. The name consists of only lowercase and uppercase characters.
+
+Task: Write a solution to fix the names so that only the first character is uppercase and the rest are lowercase.
+
+Return: The result table ordered by user_id.
+
+Example:
+Input:
+
+plaintext
+Users table:
++---------+-------+
+| user_id | name  |
++---------+-------+
+| 1       | aLice |
+| 2       | bOB   |
++---------+-------+
+Output:
+
+plaintext
++---------+-------+
+| user_id | name  |
++---------+-------+
+| 1       | Alice |
+| 2       | Bob   |
++---------+-------+
+Solution:
+The following SQL query fixes the names so that only the first character is uppercase and the rest are lowercase:
+
+sql
+-- SQL Solution to fix the names so that only the first character is uppercase and the rest are lowercase
+SELECT 
+    user_id, 
+    CONCAT(UPPER(SUBSTRING(name, 1, 1)), LOWER(SUBSTRING(name, 2))) AS name
+FROM 
+    Users
+ORDER BY 
+    user_id;
+Explanation of the Code:
+
+SELECT user_id, CONCAT(UPPER(SUBSTRING(name, 1, 1)), LOWER(SUBSTRING(name, 2))) AS name:
+
+This part of the query selects the user_id and applies string functions to fix the name.
+
+UPPER(SUBSTRING(name, 1, 1)): Extracts the first character of the name and converts it to uppercase.
+
+LOWER(SUBSTRING(name, 2)): Extracts the rest of the name starting from the second character and converts it to lowercase.
+
+CONCAT(...): Concatenates the uppercase first character and the lowercase rest of the name.
+
+FROM Users: This indicates that the data should be selected from the Users table.
+
+ORDER BY user_id: This orders the result by user_id in ascending order.
+
+Comments:
+This solution efficiently fixes the names so that only the first character is uppercase and the rest are lowercase, and returns the result table ordered by user_id.
+
+Make sure the database and table are correctly set up before running the query.

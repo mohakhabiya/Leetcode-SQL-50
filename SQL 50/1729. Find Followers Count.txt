@@ -1,0 +1,74 @@
+LeetCode Problem: 1729. Find Followers Count
+Problem Description:
+Table: Followers
+
+Column Name	Type
+user_id	int
+follower_id	int
+(user_id, follower_id) is the primary key (combination of columns with unique values) for this table.
+
+This table contains the IDs of a user and a follower in a social media app where the follower follows the user.
+
+Task: Write a solution that will, for each user, return the number of followers.
+
+Return: The result table ordered by user_id in ascending order.
+
+Example:
+Input:
+
+plaintext
+Followers table:
++---------+-------------+
+| user_id | follower_id |
++---------+-------------+
+| 0       | 1           |
+| 1       | 0           |
+| 2       | 0           |
+| 2       | 1           |
++---------+-------------+
+Output:
+
+plaintext
++---------+----------------+
+| user_id | followers_count|
++---------+----------------+
+| 0       | 1              |
+| 1       | 1              |
+| 2       | 2              |
++---------+----------------+
+Explanation:
+
+The followers of user 0 are {1}.
+
+The followers of user 1 are {0}.
+
+The followers of user 2 are {0,1}.
+
+Solution:
+The following SQL query finds the number of followers for each user:
+
+sql
+-- SQL Solution to find the number of followers for each user
+SELECT 
+    user_id, 
+    COUNT(follower_id) AS followers_count
+FROM 
+    Followers
+GROUP BY 
+    user_id
+ORDER BY 
+    user_id;
+Explanation of the Code:
+
+SELECT user_id, COUNT(follower_id) AS followers_count: This part of the query selects the user_id and counts the follower_id values for each user. The result is aliased as followers_count.
+
+FROM Followers: This indicates that the data should be selected from the Followers table.
+
+GROUP BY user_id: This groups the results by the user_id to calculate the number of followers for each user.
+
+ORDER BY user_id: This orders the results by user_id in ascending order.
+
+Comments:
+This solution efficiently calculates the number of followers for each user and returns the result ordered by user_id in ascending order.
+
+Make sure the database and table are correctly set up before running the query.

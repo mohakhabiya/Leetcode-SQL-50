@@ -1,0 +1,60 @@
+LeetCode Problem: 620. Not Boring Movies
+
+Problem Description:
+Table: Cinema
+
+Column Name	Type
+id	int
+movie	varchar
+description	varchar
+rating	float
+id is the primary key (column with unique values) for this table.
+
+Each row contains information about the name of a movie, its genre, and its rating.
+
+rating is a 2 decimal places float in the range [0, 10].
+
+Task: Write a solution to report the movies with an odd-numbered ID and a description that is not "boring".
+
+Return: The result table ordered by rating in descending order.
+
+Example:
+Input:
+
+plaintext
+Cinema table:
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 1  | War        | great 3D    | 8.9    |
+| 2  | Science    | fiction     | 8.5    |
+| 3  | irish      | boring      | 6.2    |
+| 4  | Ice song   | Fantacy     | 8.6    |
+| 5  | House card | Interesting | 9.1    |
++----+------------+-------------+--------+
+Output:
+
+plaintext
++----+------------+-------------+--------+
+| id | movie      | description | rating |
++----+------------+-------------+--------+
+| 5  | House card | Interesting | 9.1    |
+| 1  | War        | great 3D    | 8.9    |
++----+------------+-------------+--------+
+Solution:
+The following SQL query selects the movies with an odd-numbered ID and a description that is not "boring", ordered by rating in descending order:
+
+sql
+-- SQL Solution to report movies with an odd-numbered ID and a description that is not "boring"
+SELECT id, movie, description, rating
+FROM Cinema
+WHERE id % 2 != 0 AND description != 'boring'
+ORDER BY rating DESC;
+Explanation of the Code:
+
+SELECT id, movie, description, rating: This part of the query specifies that we want to select the id, movie, description, and rating columns from the Cinema table.
+
+FROM Cinema: This indicates that the data should be selected from the Cinema table.
+
+WHERE id % 2 != 0 AND description != 'boring': This condition filters the rows to include only those movies with an odd-number
+

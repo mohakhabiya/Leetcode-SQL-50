@@ -1,0 +1,80 @@
+LeetCode Problem: 176. Second Highest Salary
+Problem Description:
+Table: Employee
+
+Column Name	Type
+id	int
+salary	int
+id is the primary key (column with unique values) for this table.
+
+Each row of this table contains information about the salary of an employee.
+
+Task: Write a solution to find the second highest distinct salary from the Employee table. If there is no second highest salary, return null.
+
+Example:
+Example 1:
+
+Input:
+
+plaintext
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+Output:
+
+plaintext
++---------------------+
+| SecondHighestSalary |
++---------------------+
+| 200                 |
++---------------------+
+Example 2:
+
+Input:
+
+plaintext
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
++----+--------+
+Output:
+
+plaintext
++---------------------+
+| SecondHighestSalary |
++---------------------+
+| null                |
++---------------------+
+Solution:
+The following SQL query finds the second highest distinct salary from the Employee table:
+
+sql
+-- SQL Solution to find the second highest distinct salary
+SELECT 
+    (SELECT DISTINCT salary 
+     FROM Employee 
+     ORDER BY salary DESC 
+     LIMIT 1 OFFSET 1) AS SecondHighestSalary;
+Explanation of the Code:
+
+SELECT (SELECT DISTINCT salary FROM Employee ORDER BY salary DESC LIMIT 1 OFFSET 1) AS SecondHighestSalary: This part of the query selects the second highest distinct salary from the Employee table.
+
+DISTINCT salary: This ensures that only unique salaries are considered.
+
+ORDER BY salary DESC: This orders the salaries in descending order.
+
+LIMIT 1 OFFSET 1: This skips the highest salary and selects the second highest salary.
+
+Comments:
+This solution efficiently finds the second highest distinct salary from the Employee table.
+
+If there is no second highest salary, the query returns null.
+
+Make sure the database and table are correctly set up before running the query.

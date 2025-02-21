@@ -1,0 +1,86 @@
+LeetCode Problem: 1517. Find Users With Valid E-Mails
+Problem Description:
+Table: Users
+
+Column Name	Type
+user_id	int
+name	varchar
+mail	varchar
+user_id is the primary key (column with unique values) for this table.
+
+This table contains information about the users signed up on a website. Some e-mails are invalid.
+
+Task: Write a solution to find the users who have valid emails.
+
+A valid e-mail has a prefix name and a domain where:
+
+The prefix name is a string that may contain letters (upper or lower case), digits, underscore '_', period '.', and/or dash '-'. The prefix name must start with a letter.
+
+The domain is @leetcode.com.
+
+Return: The result table in any order.
+
+Example:
+Input:
+
+plaintext
+Users table:
++---------+-----------+-------------------------+
+| user_id | name      | mail                    |
++---------+-----------+-------------------------+
+| 1       | Winston   | winston@leetcode.com    |
+| 2       | Jonathan  | jonathanisgreat         |
+| 3       | Annabelle | bella-@leetcode.com     |
+| 4       | Sally     | sally.come@leetcode.com |
+| 5       | Marwan    | quarz#2020@leetcode.com |
+| 6       | David     | david69@gmail.com       |
+| 7       | Shapiro   | .shapo@leetcode.com     |
++---------+-----------+-------------------------+
+Output:
+
+plaintext
++---------+-----------+-------------------------+
+| user_id | name      | mail                    |
++---------+-----------+-------------------------+
+| 1       | Winston   | winston@leetcode.com    |
+| 3       | Annabelle | bella-@leetcode.com     |
+| 4       | Sally     | sally.come@leetcode.com |
++---------+-----------+-------------------------+
+Explanation:
+
+The mail of user 2 does not have a domain.
+
+The mail of user 5 has the # sign which is not allowed.
+
+The mail of user 6 does not have the leetcode domain.
+
+The mail of user 7 starts with a period.
+
+Solution:
+The following SQL query finds the users who have valid emails:
+
+sql
+-- SQL Solution to find users who have valid emails
+SELECT 
+    user_id, 
+    name, 
+    mail
+FROM 
+    Users
+WHERE 
+    mail REGEXP '^[a-zA-Z][a-zA-Z0-9._-]*@leetcode\\.com$';
+Explanation of the Code:
+
+SELECT user_id, name, mail: This part of the query selects the user_id, name, and mail columns from the Users table.
+
+FROM Users: This indicates that the data should be selected from the Users table.
+
+WHERE mail REGEXP '^[a-zA-Z][a-zA-Z0-9._-]@leetcode\\.com$':* This condition filters the records to include only those with valid emails.
+
+REGEXP '^[a-zA-Z][a-zA-Z0-9._-]@leetcode\\.com$':* This regular expression ensures:
+
+The email prefix starts with a letter (^[a-zA-Z]).
+
+The rest of the prefix can contain letters, digits, underscore, period, or dash ([a-zA-Z0-9._-]*).
+
+The email has the domain @leetcode.com (@leetcode\\.com$).

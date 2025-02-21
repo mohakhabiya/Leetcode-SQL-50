@@ -1,0 +1,99 @@
+LeetCode Problem: 1204. Last Person to Fit in the Bus
+Problem Description:
+Table: Queue
+
+Column Name	Type
+person_id	int
+person_name	varchar
+weight	int
+turn	int
+person_id column contains unique values.
+
+This table has information about all people waiting for a bus.
+
+The person_id and turn columns will contain all numbers from 1 to n, where n is the number of rows in the table.
+
+turn determines the order in which the people will board the bus, where turn=1 denotes the first person to board and turn=n denotes the last person to board.
+
+weight is the weight of the person in kilograms.
+
+Task: Write a solution to find the person_name of the last person that can fit on the bus without exceeding the weight limit of 1000 kilograms. The test cases are generated such that the first person does not exceed the weight limit.
+
+Return: The result table in any order.
+
+Example:
+Input:
+
+plaintext
+Queue table:
++-----------+-------------+--------+------+
+| person_id | person_name | weight | turn |
++-----------+-------------+--------+------+
+| 5         | Alice       | 250    | 1    |
+| 4         | Bob         | 175    | 5    |
+| 3         | Alex        | 350    | 2    |
+| 6         | John Cena   | 400    | 3    |
+| 1         | Winston     | 500    | 6    |
+| 2         | Marie       | 200    | 4    |
++-----------+-------------+--------+------+
+Output:
+
+plaintext
++-------------+
+| person_name |
++-------------+
+| John Cena   |
++-------------+
+Explanation:
+
+The following table is ordered by the turn for simplicity.
+
+plaintext
++------+----+-----------+--------+--------------+
+| Turn | ID | Name      | Weight | Total Weight |
++------+----+-----------+--------+--------------+
+| 1    | 5  | Alice     | 250    | 250          |
+| 2    | 3  | Alex      | 350    | 600          |
+| 3    | 6  | John Cena | 400    | 1000         | (last person to board)
+| 4    | 2  | Marie     | 200    | 1200         | (cannot board)
+| 5    | 4  | Bob       | 175    | ___          |
+| 6    | 1  | Winston   | 500    | ___          |
++------+----+-----------+--------+--------------+
+Solution:
+The following SQL query finds the person_name of the last person that can fit on the bus without exceeding the weight limit of 1000 kilograms:
+
+sql
+-- SQL Solution to find the last person that can fit on the bus without exceeding the weight limit
+SELECT 
+    person_name
+FROM (
+    SELECT 
+        person_name,
+        weight,
+        SUM(weight) OVER (ORDER BY turn) AS total_weight
+    FROM 
+        Queue
+) q
+WHERE total_weight <= 1000
+ORDER BY total_weight DESC
+LIMIT 1;
+Explanation of the Code:
+
+Subquery:
+
+SELECT person_name, weight, SUM(weight) OVER (ORDER BY turn) AS total_weight: This part of the query calculates the cumulative sum (total_weight) of the weights of the people in the queue, ordered by their turn.
+
+FROM Queue: This indicates that the data should be selected from the Queue table.
+
+Main Query:
+
+WHERE total_weight <= 1000: This filters the rows to include only those where the total_weight does not exceed the bus weight limit of 1000 kilograms.
+
+ORDER BY total_weight DESC: This orders the filtered results by total_weight in descending order.
+
+LIMIT 1: This limits the result to the last person that can fit on the bus without exceeding the weight limit.
+
+Comments:
+This solution efficiently finds the person_name of the last person that can fit on the bus without exceeding the weight limit of 1000 kilograms.
+
+Make sure the database and table are correctly set up before running the query.

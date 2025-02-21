@@ -1,0 +1,97 @@
+LeetCode Problem: 1075. Project Employees I
+
+Problem Description:
+Table: Project
+
+Column Name	Type
+project_id	int
+employee_id	int
+(project_id, employee_id) is the primary key of this table.
+
+employee_id is a foreign key to the Employee table.
+
+Each row of this table indicates that the employee with employee_id is working on the project with project_id.
+
+Table: Employee
+
+Column Name	Type
+employee_id	int
+name	varchar
+experience_years	int
+employee_id is the primary key of this table.
+
+It's guaranteed that experience_years is not NULL.
+
+Each row of this table contains information about one employee.
+
+Task: Write an SQL query that reports the average experience years of all the employees for each project, rounded to 2 digits.
+
+Return: The result table in any order.
+
+Example:
+Input:
+
+plaintext
+Project table:
++-------------+-------------+
+| project_id  | employee_id |
++-------------+-------------+
+| 1           | 1           |
+| 1           | 2           |
+| 1           | 3           |
+| 2           | 1           |
+| 2           | 4           |
++-------------+-------------+
+
+Employee table:
++-------------+--------+------------------+
+| employee_id | name   | experience_years |
++-------------+--------+------------------+
+| 1           | Khaled | 3                |
+| 2           | Ali    | 2                |
+| 3           | John   | 1                |
+| 4           | Doe    | 2                |
++-------------+--------+------------------+
+Output:
+
+plaintext
++-------------+---------------+
+| project_id  | average_years |
++-------------+---------------+
+| 1           | 2.00          |
+| 2           | 2.50          |
++-------------+---------------+
+Explanation:
+
+The average experience years for the first project is (3 + 2 + 1) / 3 = 2.00.
+
+The average experience years for the second project is (3 + 2) / 2 = 2.50.
+
+Solution:
+The following SQL query calculates the average experience years of all the employees for each project, rounded to 2 digits:
+
+sql
+-- SQL Solution to report the average experience years of all employees for each project
+SELECT 
+    P.project_id, 
+    ROUND(AVG(E.experience_years), 2) AS average_years
+FROM 
+    Project P
+JOIN 
+    Employee E ON P.employee_id = E.employee_id
+GROUP BY 
+    P.project_id;
+Explanation of the Code:
+
+SELECT P.project_id, ROUND(AVG(E.experience_years), 2) AS average_years: This part of the query specifies that we want to select the project_id from the Project table (aliased as P) and the average of experience_years from the Employee table (aliased as E), rounded to 2 decimal places.
+
+FROM Project P: This indicates that the data should be selected from the Project table, aliased as P.
+
+JOIN Employee E ON P.employee_id = E.employee_id: This joins the Project table with the Employee table on the employee_id column.
+
+GROUP BY P.project_id: This groups the result by the project_id to calculate the average experience years for each project.
+
+Comments:
+This solution efficiently calculates the average experience years of all employees for each project.
+
+Make sure the database and tables are correctly set up before running the query.
