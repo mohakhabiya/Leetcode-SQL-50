@@ -1,4 +1,4 @@
-LeetCode Problem: 1045. Customers Who Bought All Products
+/* LeetCode Problem: 1045. Customers Who Bought All Products
 Problem Description:
 Table: Customer
 
@@ -60,12 +60,12 @@ Solution:
 The following SQL query reports the customer IDs that bought all the products in the Product table:
 
 sql
--- SQL Solution to report the customer IDs that bought all the products in the Product table
+-- SQL Solution to report the customer IDs that bought all the products in the Product table */
 SELECT customer_id
 FROM Customer
 GROUP BY customer_id
 HAVING COUNT(DISTINCT product_key) = (SELECT COUNT(*) FROM Product);
-Explanation of the Code:
+/*  Explanation of the Code:
 
 SELECT customer_id: This part of the query selects the customer_id from the Customer table.
 
@@ -78,4 +78,4 @@ HAVING COUNT(DISTINCT product_key) = (SELECT COUNT() FROM Product):* This condit
 Comments:
 This solution efficiently identifies and retrieves the customer IDs that bought all the products in the Product table.
 
-Make sure the database and tables are correctly set up before running the query.
+Make sure the database and tables are correctly set up before running the query.   */
